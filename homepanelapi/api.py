@@ -53,6 +53,7 @@ class HomePanelApi:
             )
         )
 
+    # pylint: disable=C0330
     async def async_send_command(
         self, page: str, card: str, command: str
     ) -> json:
