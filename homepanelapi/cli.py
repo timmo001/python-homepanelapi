@@ -1,7 +1,5 @@
 """Enable CLI."""
-import asyncio
 import click
-import json
 
 
 @click.command()

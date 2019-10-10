@@ -2,7 +2,6 @@
 import asyncio
 import aiohttp
 import json
-import jwt
 
 loop = asyncio.get_event_loop()
 
@@ -19,7 +18,11 @@ class HomePanelApi:
             asyncio.wait_for(
                 self.post(
                     "/authentication",
-                    {"strategy": "local", "username": username, "password": password},
+                    {
+                        "strategy": "local",
+                        "username": username,
+                        "password": password,
+                    },
                 ),
                 timeout=10.0,
             )
@@ -31,7 +34,8 @@ class HomePanelApi:
         return loop.run_until_complete(
             asyncio.wait_for(
                 self.post_with_auth(
-                    "/controller", {"page": page, "card": card, "command": command}
+                    "/controller",
+                    {"page": page, "card": card, "command": command},
                 ),
                 timeout=10.0,
             )
