@@ -13,7 +13,7 @@ pip install homepanelapi
 ### Example
 
 ```bash
-
+homepanelapi --host localhost --port 8234 --username username --password password --page Home --card Image --command expand
 ```
 
 #### CLI options
