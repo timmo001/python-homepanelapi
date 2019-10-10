@@ -31,6 +31,15 @@ class HomePanelApi:
         self.authentication = data["accessToken"]
         return True
 
+    async def async_authenticate(self, username: str, password: str) -> bool:
+        """Authenticate with Home Panel."""
+        data = await self.post(
+            "/authentication",
+            {"strategy": "local", "username": username, "password": password},
+        )["accessToken"]
+        self.authentication = data
+        return True
+
     def send_command(self, page: str, card: str, command: str) -> json:
         """Send a command to Home Panel."""
         loop = asyncio.get_event_loop()
@@ -42,6 +51,14 @@ class HomePanelApi:
                 ),
                 timeout=10.0,
             )
+        )
+
+    async def async_send_command(
+        self, page: str, card: str, command: str
+    ) -> json:
+        """Send a command to Home Panel."""
+        return await self.post_with_auth(
+            "/controller", {"page": page, "card": card, "command": command}
         )
 
     async def post(self, endpoint: str, data: json) -> json:
