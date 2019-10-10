@@ -1,9 +1,7 @@
 """Access the Home Panel API."""
+import json
 import asyncio
 import aiohttp
-import json
-
-loop = asyncio.get_event_loop()
 
 
 class HomePanelApi:
@@ -12,9 +10,11 @@ class HomePanelApi:
     def __init__(self, host: str, port: str, ssl: bool) -> json:
         """Initilalize."""
         self.url = "{}://{}:{}".format("https" if ssl else "http", host, port)
+        self.authentication = None
 
     def authenticate(self, username: str, password: str) -> bool:
         """Authenticate with Home Panel."""
+        loop = asyncio.get_event_loop()
         data = loop.run_until_complete(
             asyncio.wait_for(
                 self.post(
@@ -33,6 +33,7 @@ class HomePanelApi:
 
     def send_command(self, page: str, card: str, command: str) -> json:
         """Send a command to Home Panel."""
+        loop = asyncio.get_event_loop()
         return loop.run_until_complete(
             asyncio.wait_for(
                 self.post_with_auth(
@@ -55,6 +56,7 @@ class HomePanelApi:
         url = "{}{}".format(self.url, endpoint)
         authorization = "Bearer {}".format(self.authentication)
         async with aiohttp.ClientSession() as session:
+            # pylint: disable=C0330
             async with session.post(
                 url=url, data=data, headers={"Authorization": authorization}
             ) as response:
