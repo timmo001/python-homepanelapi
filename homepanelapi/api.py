@@ -14,6 +14,7 @@ class HomePanelApi:
         self.url = "{}://{}:{}".format("https" if ssl else "http", host, port)
 
     def authenticate(self, username: str, password: str) -> bool:
+        """Authenticate with Home Panel."""
         data = loop.run_until_complete(
             asyncio.wait_for(
                 self.post(
@@ -31,6 +32,7 @@ class HomePanelApi:
         return True
 
     def send_command(self, page: str, card: str, command: str) -> json:
+        """Send a command to Home Panel."""
         return loop.run_until_complete(
             asyncio.wait_for(
                 self.post_with_auth(
@@ -42,12 +44,14 @@ class HomePanelApi:
         )
 
     async def post(self, endpoint: str, data: json) -> json:
+        """Post to Home Panel."""
         url = "{}{}".format(self.url, endpoint)
         async with aiohttp.ClientSession() as session:
             async with session.post(url=url, data=data) as response:
                 return await response.json()
 
     async def post_with_auth(self, endpoint: str, data: json) -> json:
+        """Post to Home Panel with authentication."""
         url = "{}{}".format(self.url, endpoint)
         authorization = "Bearer {}".format(self.authentication)
         async with aiohttp.ClientSession() as session:
