@@ -1,11 +1,14 @@
 """Access the Home Panel API."""
+import logging
 import json
 import asyncio
 import aiohttp
 
+_LOGGER = logging.getLogger(__name__)
+
 
 class HomePanelApi:
-    """Class the Home Panel API."""
+    """Class for Home Panel API Client."""
 
     def __init__(self, host: str, port: str, ssl: bool) -> json:
         """Initilalize."""
@@ -28,17 +31,29 @@ class HomePanelApi:
                 timeout=10.0,
             )
         )
-        self.authentication = data["accessToken"]
-        return True
+        if data and data["accessToken"]:
+            self.authentication = data["accessToken"]
+            return True
+        elif data and data["message"]:
+            _LOGGER.error("Error authenticating: %s", data["message"])
+        else:
+            _LOGGER.error("Error authenticating: Unknown")
+        return False
 
     async def async_authenticate(self, username: str, password: str) -> bool:
         """Authenticate with Home Panel."""
         data = await self.post(
             "/authentication",
             {"strategy": "local", "username": username, "password": password},
-        )["accessToken"]
-        self.authentication = data
-        return True
+        )
+        if data and data["accessToken"]:
+            self.authentication = data["accessToken"]
+            return True
+        elif data and data["message"]:
+            _LOGGER.error("Error authenticating: %s", data["message"])
+        else:
+            _LOGGER.error("Error authenticating: Unknown")
+        return False
 
     def send_command(self, page: str, card: str, command: str) -> json:
         """Send a command to Home Panel."""
