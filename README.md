@@ -1,4 +1,4 @@
-# homepanelapi [![Build Status](https://travis-ci.com/timmo/python-homepanelapi.svg?branch=master)](https://travis-ci.com/timmo/python-homepanelapi)
+# homepanelapi [![Build Status](https://travis-ci.com/timmo001/python-homepanelapi.svg?branch=master)](https://travis-ci.com/timmo001/python-homepanelapi)
 
 Python Package for Home Panel's API.
 
