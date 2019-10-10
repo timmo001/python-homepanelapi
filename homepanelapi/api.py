@@ -34,7 +34,7 @@ class HomePanelApi:
         if data and data["accessToken"]:
             self.authentication = data["accessToken"]
             return True
-        elif data and data["message"]:
+        if data and data["message"]:
             _LOGGER.error("Error authenticating: %s", data["message"])
         else:
             _LOGGER.error("Error authenticating: Unknown")
@@ -49,7 +49,7 @@ class HomePanelApi:
         if data and data["accessToken"]:
             self.authentication = data["accessToken"]
             return True
-        elif data and data["message"]:
+        if data and data["message"]:
             _LOGGER.error("Error authenticating: %s", data["message"])
         else:
             _LOGGER.error("Error authenticating: Unknown")
