@@ -1,7 +1,7 @@
 """Enable CLI."""
 import click
 
-
+# pylint: disable=C0330
 @click.command()
 @click.option("--host", "-h", help="Home Panel's Hostname.")
 @click.option("--port", "-P", help="The Home Panel Port.")
