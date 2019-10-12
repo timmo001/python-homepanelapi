@@ -68,15 +68,6 @@ class HomePanelApi:
             )
         )
 
-    def get_config(self) -> json:
-        loop = asyncio.get_event_loop()
-        return loop.run_until_complete(
-            asyncio.wait_for(self.get_with_auth("/config"), timeout=10.0)
-        )
-
-    async def async_get_config(self) -> json:
-        return await self.get_with_auth("/config")
-
     # pylint: disable=C0330
     async def async_send_command(
         self, page: str, card: str, command: str
@@ -85,6 +76,17 @@ class HomePanelApi:
         return await self.post_with_auth(
             "/controller", {"page": page, "card": card, "command": command}
         )
+
+    def get_config(self) -> json:
+        """Get config from Home Panel."""
+        loop = asyncio.get_event_loop()
+        return loop.run_until_complete(
+            asyncio.wait_for(self.get_with_auth("/config"), timeout=10.0)
+        )
+
+    async def async_get_config(self) -> json:
+        """Get config from Home Panel."""
+        return await self.get_with_auth("/config")
 
     async def post(self, endpoint: str, data: json) -> json:
         """Post to Home Panel."""
