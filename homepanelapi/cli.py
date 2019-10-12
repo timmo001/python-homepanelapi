@@ -27,6 +27,7 @@ def cli(
     home_panel_api = HomePanelApi(host, port, ssl)
     home_panel_api.authenticate(username, password)
     print(home_panel_api.send_command(page, card, command))
+    print(home_panel_api.get_config())
 
 
 cli()  # pylint: disable=E1120
