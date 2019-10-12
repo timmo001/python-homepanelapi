@@ -81,12 +81,15 @@ class HomePanelApi:
         """Get config from Home Panel."""
         loop = asyncio.get_event_loop()
         return loop.run_until_complete(
-            asyncio.wait_for(self.get_with_auth("/config"), timeout=10.0)
+            asyncio.wait_for(
+                self.get_with_auth("/config")["data"][0]["config"],
+                timeout=10.0,
+            )
         )
 
     async def async_get_config(self) -> json:
         """Get config from Home Panel."""
-        return await self.get_with_auth("/config")
+        return await self.get_with_auth("/config")["data"][0]["config"]
 
     async def post(self, endpoint: str, data: json) -> json:
         """Post to Home Panel."""

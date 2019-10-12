@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
     LONG = fh.read()
 setuptools.setup(
     name="homepanelapi",
-    version="1.0.3",
+    version="1.0.4",
     author="Timmo",
     author_email="contact@timmo.xyz",
     description="",
